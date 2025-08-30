@@ -1,12 +1,25 @@
-import React from "react";
+// src/features/cartSlice.js
+import { createSlice } from "@reduxjs/toolkit";
 
-function App() {
-  return (
-    <div>
-      <h1>🌱 Welcome to Plantify!</h1>
-      <p>Your plant shopping app is running successfully 🚀</p>
-    </div>
-  );
-}
+const initialState = {
+  items: []
+};
 
-export default App;
+const cartSlice = createSlice({
+  name: "cart",
+  initialState,
+  reducers: {
+    addToCart: (state, action) => {
+      state.items.push(action.payload);
+    },
+    removeFromCart: (state, action) => {
+      state.items = state.items.filter(item => item.id !== action.payload.id);
+    },
+    clearCart: (state) => {
+      state.items = [];
+    }
+  }
+});
+
+export const { addToCart, removeFromCart, clearCart } = cartSlice.actions;
+export default cartSlice.reducer;
